@@ -13,7 +13,7 @@ const listGroup = document.getElementById("list-group");
 
 const container = document.getElementById("info");
 
-const favoriteArr = [];
+const favoriteArr = JSON.parse(localStorage.getItem("myFavoriteAnime") || "[]");
 
 const infoClasses = ["container", "bg-secondary", "mt-3", "p-2", "rounded"];
 
@@ -56,7 +56,7 @@ container.addEventListener("click", async (evt) => {
       title: info.data.title,
       id: info.data.mal_id,
     });
-    console.log("Added to favorites: ", favoriteArr);
+    localStorage.setItem("myFavoriteAnime", JSON.stringify(favoriteArr));
     const alert = createAlert(info.data.title);
     container.appendChild(alert);
     setTimeout(() => {

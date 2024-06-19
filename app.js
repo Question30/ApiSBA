@@ -6,6 +6,8 @@ const seacrchButton = document.getElementById("search-button");
 
 const listGroup = document.getElementById("list-group");
 
+const container = document.getElementById("info");
+
 seacrchButton.addEventListener("click", async (evt) => {
   listGroup.innerHTML = "";
   const value = searchBar.value;
@@ -25,5 +27,14 @@ seacrchButton.addEventListener("click", async (evt) => {
 listGroup.addEventListener("click", async (evt) => {
   const data = await getAnimeById(evt.target.id);
   listGroup.innerHTML = "";
-  createCard(data);
+  container.classList.add(
+    "container",
+    "bg-secondary",
+    "mt-3",
+    "p-2",
+    "rounded"
+  );
+
+  const infoContainer = loadInfo(data);
+  container.appendChild(infoContainer);
 });

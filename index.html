@@ -13,9 +13,9 @@
     <script type="module" src="app.js" defer></script>
     <title>Anime Lists</title>
   </head>
-  <body class="h-100">
-    <main class="d-flex justify-content-center h-75 flex-column">
-      <div class="input-group mb-0 w-50">
+  <body class="h-100 bg-dark">
+    <main class="d-flex justify-content-center align-items-center flex-column">
+      <div class="d-flex mb-0 w-50">
         <input
           id="search-bar"
           type="text"
@@ -30,13 +30,13 @@
           type="button"
           id="button-addon1"
         >
-          Button
+          Search
         </button>
       </div>
       <div class="w-50">
         <ul id="list-group" class="list-group"></ul>
       </div>
-      <div class="container"></div>
+      <div id="info"></div>
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

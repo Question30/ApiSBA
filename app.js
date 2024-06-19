@@ -2,7 +2,7 @@ import {
   createListGroupItem,
   createAlert,
   createCard,
-  loadInfo,
+  createInfoContainer,
 } from "./Dom.js";
 import { getAnimeByName, getAnimeById } from "./dbData.js";
 
@@ -35,35 +35,59 @@ seacrchButton.addEventListener("click", async (evt) => {
   });
 });
 
-listGroup.addEventListener("click", async (evt) => {
-  const data = await getAnimeById(evt.target.id);
-  listGroup.innerHTML = "";
-  container.innerHTML = "";
-  container.classList.remove(...galleryClasses);
-  container.classList.add(...infoClasses);
-
-  console.log(container.classList.keys());
-
-  const infoContainer = loadInfo(data);
-  container.appendChild(infoContainer);
+listGroup.addEventListener("click", (evt) => {
+  loadInfo(evt.target.id);
 });
 
 container.addEventListener("click", async (evt) => {
   if (evt.target.id === "favorite") {
     const info = await getAnimeById(evt.target.value);
-    favoriteArr.push({
+    const obj = {
       img: info.data.images.jpg.image_url,
       title: info.data.title,
       id: info.data.mal_id,
-    });
-    localStorage.setItem("myFavoriteAnime", JSON.stringify(favoriteArr));
-    const alert = createAlert(info.data.title);
-    container.appendChild(alert);
-    setTimeout(() => {
-      loadFavorites(favoriteArr);
-    }, 2000);
+    };
+
+    if (!favoriteContains(obj)) {
+      console.log("hello");
+      favoriteArr.push(obj);
+      localStorage.setItem("myFavoriteAnime", JSON.stringify(favoriteArr));
+      const alert = createAlert(info.data.title);
+      container.appendChild(alert);
+    } else {
+      const alert = createAlert(info.data.title);
+      alert.textContent = `${info.data.title} is already in your list!`;
+      container.appendChild(alert);
+      setTimeout(() => {
+        loadFavorites(favoriteArr);
+      }, 2000);
+    }
+  } else if (evt.target.innerHTML === "View More Info") {
+    loadInfo(evt.target.id);
   }
 });
+
+function favoriteContains(obj) {
+  let result = false;
+  favoriteArr.forEach((element) => {
+    if (element.title === obj.title) {
+      result = true;
+    }
+  });
+
+  return result;
+}
+
+async function loadInfo(id) {
+  const data = await getAnimeById(id);
+  listGroup.innerHTML = "";
+  container.innerHTML = "";
+  container.classList.remove(...galleryClasses);
+  container.classList.add(...infoClasses);
+
+  const infoContainer = createInfoContainer(data);
+  container.appendChild(infoContainer);
+}
 
 function loadFavorites(arr) {
   container.innerHTML = "";

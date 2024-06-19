@@ -31,6 +31,7 @@ function createCard(info) {
   const btn = document.createElement("button");
   btn.classList.add("btn", "btn-primary");
   btn.textContent = "View More Info";
+  btn.setAttribute("id", info.id);
 
   cardBody.appendChild(h5);
   cardBody.appendChild(btn);
@@ -40,7 +41,7 @@ function createCard(info) {
   return card;
 }
 
-function loadInfo(info) {
+function createInfoContainer(info) {
   //Create container to house everything
   const container = document.createElement("div");
   container.classList.add(
@@ -149,4 +150,4 @@ function createAlert(title) {
   return alert;
 }
 
-export { createListGroupItem, createCard, loadInfo, createAlert };
+export { createListGroupItem, createCard, createInfoContainer, createAlert };

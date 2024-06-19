@@ -17,7 +17,7 @@ const favoriteArr = JSON.parse(localStorage.getItem("myFavoriteAnime") || "[]");
 
 const infoClasses = ["container", "bg-secondary", "mt-3", "p-2", "rounded"];
 
-const galleryClasses = ["d-flex", "flex-wrap"];
+const galleryClasses = ["d-flex", "flex-wrap", "justify-content-center"];
 
 loadFavorites(favoriteArr);
 

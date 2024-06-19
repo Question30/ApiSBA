@@ -5,7 +5,7 @@ async function getAnimeByName(string) {
 
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -16,7 +16,7 @@ async function getAnimeById(id) {
 
     return result;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

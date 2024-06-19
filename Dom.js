@@ -9,6 +9,7 @@ function createListGroupItem(string, id) {
 function createCard(info) {
   const card = document.createElement("div");
   card.classList.add("card", "m-3");
+  card.style.maxWidth = "225px";
 
   const cardimg = document.createElement("img");
   cardimg.classList.add("card-img-top");
@@ -21,11 +22,12 @@ function createCard(info) {
     "text-center",
     "d-flex",
     "flex-column",
-    "justify-content-end"
+    "justify-content-end",
+    "text-wrap"
   );
 
   const h5 = document.createElement("h5");
-  h5.classList.add("card-title");
+  h5.classList.add("card-title", "text-wrap");
   h5.textContent = info.title;
 
   const btn = document.createElement("button");

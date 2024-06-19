@@ -49,17 +49,19 @@ container.addEventListener("click", async (evt) => {
     };
 
     if (!favoriteContains(obj)) {
-      console.log("hello");
       favoriteArr.push(obj);
       localStorage.setItem("myFavoriteAnime", JSON.stringify(favoriteArr));
       const alert = createAlert(info.data.title);
       container.appendChild(alert);
+      setTimeout(() => {
+        loadFavorites(favoriteArr);
+      }, 2000);
     } else {
       const alert = createAlert(info.data.title);
       alert.textContent = `${info.data.title} is already in your list!`;
       container.appendChild(alert);
       setTimeout(() => {
-        loadFavorites(favoriteArr);
+        container.removeChild(alert);
       }, 2000);
     }
   } else if (evt.target.innerHTML === "View More Info") {
@@ -99,7 +101,6 @@ function loadFavorites(arr) {
     container.classList.remove(...infoClasses);
     container.classList.add(...galleryClasses);
     arr.forEach((element) => {
-      console.log(element);
       const card = createCard(element);
       container.appendChild(card);
     });

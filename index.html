@@ -11,10 +11,12 @@
       crossorigin="anonymous"
     />
     <script type="module" src="app.js" defer></script>
-    <title>Anime Lists</title>
+    <title>Anime List</title>
   </head>
   <body class="h-100 bg-dark">
-    <main class="d-flex justify-content-center align-items-center flex-column">
+    <main
+      class="d-flex justify-content-center align-items-center flex-column mt-3"
+    >
       <div class="d-flex mb-0 w-50">
         <input
           id="search-bar"
@@ -24,16 +26,11 @@
           aria-label="Example text with button addon"
           aria-describedby="button-addon1"
         />
-        <button
-          id="search-button"
-          class="btn btn-primary"
-          type="button"
-          id="button-addon1"
-        >
+        <button id="search-button" class="btn btn-primary" type="button">
           Search
         </button>
       </div>
-      <div class="w-50">
+      <div class="w-50 mb-3">
         <ul id="list-group" class="list-group"></ul>
       </div>
       <div id="info"></div>

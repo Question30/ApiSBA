@@ -7,7 +7,37 @@ function createListGroupItem(string, id) {
 }
 
 function createCard(info) {
-  console.log(info.data);
+  const card = document.createElement("div");
+  card.classList.add("card", "m-3");
+
+  const cardimg = document.createElement("img");
+  cardimg.classList.add("card-img-top");
+  cardimg.setAttribute("src", info.img);
+  cardimg.setAttribute("alt", info.title);
+
+  const cardBody = document.createElement("div");
+  cardBody.classList.add(
+    "card-body",
+    "text-center",
+    "d-flex",
+    "flex-column",
+    "justify-content-end"
+  );
+
+  const h5 = document.createElement("h5");
+  h5.classList.add("card-title");
+  h5.textContent = info.title;
+
+  const btn = document.createElement("button");
+  btn.classList.add("btn", "btn-primary");
+  btn.textContent = "View More Info";
+
+  cardBody.appendChild(h5);
+  cardBody.appendChild(btn);
+  card.appendChild(cardimg);
+  card.appendChild(cardBody);
+
+  return card;
 }
 
 function loadInfo(info) {
@@ -41,56 +71,36 @@ function loadInfo(info) {
   genreDiv.textContent = "Genres:";
 
   //Create badge container for genres
-  const badgeContainer = document.createElement("div");
-  badgeContainer.classList.add("d-flex", "justify-content-around", "w-100");
-  info.data.genres.forEach((element) => {
-    const span = document.createElement("span");
-    span.classList.add("badge", "text-bg-light");
-    span.textContent = element.name;
-    badgeContainer.appendChild(span);
-  });
+  const badgeContainer = createBadgeContainer(info.data.genres);
   genreDiv.appendChild(badgeContainer);
   infoContainer.appendChild(genreDiv);
 
   //Create rank and append
-  const rank = document.createElement("div");
-  rank.classList.add("border", "border-black");
-  rank.textContent = `Rank: ${info.data.rank}`;
+  const rank = createSection("Rank", info.data.rank);
   infoContainer.appendChild(rank);
 
   //Create status and append
-  const status = document.createElement("div");
-  status.classList.add("border", "border-black");
-  status.textContent = `Status: ${info.data.status}`;
+  const status = createSection("Status", info.data.status);
   infoContainer.appendChild(status);
 
   //Create type and append
-  const type = document.createElement("div");
-  type.classList.add("border", "border-black");
-  type.textContent = `Type: ${info.data.type}`;
+  const type = createSection("Type", info.data.type);
   infoContainer.appendChild(type);
 
   //Create episodes and append
-  const episodes = document.createElement("div");
-  episodes.classList.add("border", "border-black");
-  episodes.textContent = `Episodes: ${info.data.episodes}`;
+  const episodes = createSection("Episodes", info.data.episodes);
   infoContainer.appendChild(episodes);
 
   //Create synopsis
-  const synopsis = document.createElement("div");
-  synopsis.classList.add("border", "border-black");
-  const h6 = document.createElement("h6");
-  h6.textContent = "Synopsis";
-  synopsis.appendChild(h6);
-  const p = document.createElement("p");
-  p.textContent = `${info.data.synopsis}`;
-  synopsis.appendChild(p);
+  const synopsis = createSection("Synopsis", info.data.synopsis);
   infoContainer.appendChild(synopsis);
 
   //Favorites Button
   const button = document.createElement("button");
   button.classList.add("btn", "btn-primary", "rounded", "mt-2");
   button.textContent = "Add to Favorites";
+  button.setAttribute("id", "favorite");
+  button.setAttribute("value", info.data.mal_id);
   infoContainer.appendChild(button);
 
   container.appendChild(infoContainer);
@@ -98,4 +108,45 @@ function loadInfo(info) {
   return container;
 }
 
-export { createListGroupItem, createCard, loadInfo };
+function createSection(string, info) {
+  const div = document.createElement("div");
+  div.classList.add("border", "border-black");
+
+  if (string === "Synopsis") {
+    const h6 = document.createElement("h6");
+    h6.textContent = `${string}:`;
+    div.appendChild(h6);
+
+    const p = document.createElement("p");
+    p.textContent = info;
+    div.appendChild(p);
+  } else {
+    div.textContent = `${string}: ${info}`;
+  }
+
+  return div;
+}
+
+function createBadgeContainer(genresArr) {
+  const badgeContainer = document.createElement("div");
+  badgeContainer.classList.add("d-flex", "justify-content-around", "w-100");
+  genresArr.forEach((element) => {
+    const span = document.createElement("span");
+    span.classList.add("badge", "text-bg-light");
+    span.textContent = element.name;
+    badgeContainer.appendChild(span);
+  });
+
+  return badgeContainer;
+}
+
+function createAlert(title) {
+  const alert = document.createElement("div");
+  alert.classList.add("alert", "alert-primary");
+  alert.setAttribute("role", "alert");
+  alert.textContent = `${title} was added to favorites`;
+
+  return alert;
+}
+
+export { createListGroupItem, createCard, loadInfo, createAlert };
